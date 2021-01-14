@@ -4,6 +4,7 @@ public class Home {
 	
 	static ArrayList<Restaurant> Restaurant_List=new ArrayList<>();
 	static ArrayList<User> User_List=new ArrayList<>();
+	static ArrayList<Foods_In_Restaurant>list_of_all_foods=new ArrayList<>();
 	
 	public static void main(String[] args) {
 		Scanner sc=new Scanner(System.in);
@@ -18,12 +19,14 @@ public class Home {
 			  System.out.println("Jupiter Foods Welcomes You!!!");
 			  System.out.println("To Register Press: 1");
 			  System.out.println("To Update Menue Press: 2");
+			  System.out.println("To Update Order Limit Press: 3");
 			  int res_press=sc.nextInt();
 			  if(res_press==1){
 				  Resaurant_Registration();
 			  }else if(res_press==2){
-				  System.out.println("Enter ");
 				  Resaurant_Updation_Menue();
+			  }else if(res_press==3){
+				  Resaurant_Update_Order_limit();
 			  }
 			  
 			  
@@ -45,6 +48,29 @@ public class Home {
 		
 		
 
+	}
+	private static void Resaurant_Update_Order_limit() {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Please Enter your restaurant id: ");
+	    int res_id=sc.nextInt();
+	    System.out.println("Please Enter order limit :  ");
+	    int order_limit=sc.nextInt();
+	    boolean falg=false;
+	    for(int i=0;i<Restaurant_List.size();i++){
+	    	System.out.println("Res_Id: "+Restaurant_List.get(i).getId());
+	    	if(res_id==Restaurant_List.get(i).getId()){
+	    		Restaurant_List.get(i).setOrder_limit(order_limit);
+	    		falg=true;
+	    		break;
+	    	}
+	    }
+	    if(falg==false){
+	    	System.out.println("No Resturant found!! Please register first!!");
+	    	
+	    	
+	    }
+	    main(null);
+		
 	}
 	private static void Resaurant_Updation_Menue() {
 	    Scanner sc=new Scanner(System.in);
@@ -70,15 +96,33 @@ public class Home {
 	    System.out.println("How many items you want to add: ");
 	    int items=sc.nextInt();
 	    for(int i=0;i<items;i++){
+	    	
 	    	System.out.println("Enter About "+ (i+1)+ "Food: ");
+	    	System.out.println("Food Id: ");
+	    	String food_id=sc.next();
 	    	System.out.println("Food Name: ");
 	    	String food_name=sc.next();
 	    	System.out.println("Food Price :");
 	    	String food_price=sc.next();
 	    	System.out.println("Food Cuisine :");
 	    	String food_cuisine=sc.next();
-	    	Foods food=new Foods(food_name,food_price,food_cuisine);
+	    	Foods food=new Foods(food_id,food_name,food_price,food_cuisine);
 	    	rest_obj.food_menu.add(food);
+	    	
+	    	boolean food_flag=false;
+	    	for(int k=0;k<list_of_all_foods.size();k++){
+	    		if(food_name.equals(list_of_all_foods.get(k).getFood().getFood_name())){
+	    			list_of_all_foods.get(k).FoodInRestaurant.add(rest_obj);
+	    			food_flag=true;
+	    			break;
+	    		}
+	    	}
+	    	if(food_flag==false){
+	    		Foods_In_Restaurant foods_in_rest=new Foods_In_Restaurant(food);
+	    		foods_in_rest.FoodInRestaurant.add(rest_obj);
+	    		list_of_all_foods.add(foods_in_rest);
+	    	}
+	    	
 	    	System.out.println("Food Added Successfully!!");
 	    }
 	    main(null);
@@ -92,6 +136,8 @@ public class Home {
 		  System.out.println("3: TO Delete Your Profile ");
 		  System.out.println("4: TO See Your Profile ");
 		  System.out.println("5: To search Restaurant ");
+		  System.out.println("6: To search in all Foods ");
+		  
 		  int user_press=sc.nextInt();
 		  if(user_press==1){User_Registration();}
 		  else if(user_press==2){
@@ -111,10 +157,82 @@ public class Home {
 			  System.out.println("name of Restaurant: ");
 			  String res_name=sc.next();
 			  Search_Restaurant(res_name);
+		  }else if(user_press==6){
+			  System.out.println("name of food: ");
+			  String food_name_to_be_searched=sc.next();
+			  Search_Food(food_name_to_be_searched);
+			  
 		  }else{
 			  System.out.println("Please! make a valid Selection");
 			  User_Method();
 		  }
+		
+	}
+	private static void Search_Food(String food_name_to_be_searched) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println(food_name_to_be_searched+ " food is available :");
+		boolean flag=false;
+		Foods food = null;
+		for(int i=0;i<list_of_all_foods.size();i++){
+			if(food_name_to_be_searched.equals(list_of_all_foods.get(i).getFood().getFood_name())){
+				food=list_of_all_foods.get(i).getFood();
+				ArrayList<Restaurant> restaurant_having_this_food=list_of_all_foods.get(i).FoodInRestaurant;
+				for(int j=0;j<restaurant_having_this_food.size();j++){
+					System.out.println(restaurant_having_this_food.get(j).getId()+" "+restaurant_having_this_food.get(j).getName());
+				}
+				flag=true;
+				break;
+			}
+		}
+		if(flag==false){System.out.println("No such food!!");}
+		
+		System.out.println("If you want to place an order please type yes else No: ");
+		String user_command=sc.next();
+		user_command=user_command.toLowerCase();
+				
+		if(user_command.equals("yes")){
+			
+			Place_an_order(food);
+			return;
+		}
+		User_Method();
+		
+	}
+	private static void Place_an_order(Foods food) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Please enter restaurant id: ");
+		int res_id=sc.nextInt();
+		
+		System.out.println("Please eneter user name: ");
+		String user_name=sc.next();
+		
+		User user=null;
+		for(int k=0;k<User_List.size();k++){
+			if(user_name.equals(User_List.get(k).getName())){
+				user=User_List.get(k);
+				break;
+			}
+		}
+		
+		for(int i=0;i<Restaurant_List.size();i++){
+			if(res_id==Restaurant_List.get(i).getId()){
+				Restaurant restaurant=Restaurant_List.get(i);
+			
+				Order_Class order=new Order_Class(user,restaurant,food,"Processing");
+				
+				if(restaurant.getOrder_limit()==restaurant.orders.size()){
+					System.out.println("This order can not be placed!! Please check another resturant!!");
+					Place_an_order(food);
+				}
+				else{
+					restaurant.orders.add(order);
+					System.out.println("You order is in process!!");
+				}
+				
+				break;
+			}
+		}
+		User_Method();
 		
 	}
 	private static void Search_Restaurant(String res_name) {
@@ -132,6 +250,16 @@ public class Home {
 			    System.out.println("State:  "+res_add.getState());
 			    System.out.println("Phone:  "+res_add.getPhone());
 			    System.out.println("pin:  "+res_add.getPin());
+			    
+			    ArrayList<Foods>food_list=res_info.getFood_menu();
+			    for(int j=0;j<food_list.size();i++){
+			    	Foods food=food_list.get(i);
+			    	System.out.println((i+1)+" : ");
+			    	System.out.println("Food id: "+food.getFood_id());
+			    	System.out.println("Food Name: "+food.getFood_name());
+			    	System.out.println("Food Price: "+food.getPrice());
+			    	System.out.println("Food Coisine: "+food.getCuisine());
+			    }
 			    break;
 			}
 		}

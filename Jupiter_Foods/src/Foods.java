@@ -1,19 +1,32 @@
 import java.util.*;
 public class Foods {
-
+    
+	private String food_id;
 	private String food_name;
 	private String price;
 	private String Cuisine;
 	
 	
 	
-	public Foods(String food_name, String price, String cuisine) {
+	public Foods(String food_id,String food_name, String price, String cuisine) {
 		super();
+		this.food_id=food_id;
 		this.food_name = food_name;
 		this.price = price;
 		Cuisine = cuisine;
 	}
 	
+	
+	public String getFood_id() {
+		return food_id;
+	}
+
+
+	public void setFood_id(String food_id) {
+		this.food_id = food_id;
+	}
+
+
 	public String getFood_name() {
 		return food_name;
 	}

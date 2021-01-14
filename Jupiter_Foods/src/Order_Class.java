@@ -3,17 +3,17 @@ public class Order_Class {
 
 	private User user;
 	private Restaurant restaurant ;
-	ArrayList<Foods>list_item=new ArrayList<>();
+	private Foods food;
 	private String Status;
 	
 	
 	
 	public Order_Class(User user, Restaurant restaurant,
-			ArrayList<Foods> list_item, String status) {
+			Foods food, String status) {
 		super();
 		this.user = user;
 		this.restaurant = restaurant;
-		this.list_item = list_item;
+		this.food = food;
 		Status = status;
 	}
 	
@@ -29,12 +29,15 @@ public class Order_Class {
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
 	}
-	public ArrayList<Foods> getList_item() {
-		return list_item;
+	
+	public Foods getFood() {
+		return food;
 	}
-	public void setList_item(ArrayList<Foods> list_item) {
-		this.list_item = list_item;
+
+	public void setFood(Foods food) {
+		this.food = food;
 	}
+
 	public String getStatus() {
 		return Status;
 	}
