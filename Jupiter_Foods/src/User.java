@@ -1,8 +1,8 @@
 
 public class User {
-	private String name;
-	private String mobile_number;
-	private Address address;
+	private String name; //User input
+	private String mobile_number; //User input
+	private Address address; //User input
 	
 	
 	public User(String name, String mobile_number, Address address) {

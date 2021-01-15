@@ -1,6 +1,7 @@
 import java.util.*;
 public class Order_Class {
 
+	// This class object will store the order information. When an order is placed!!
 	private User user;
 	private Restaurant restaurant ;
 	private Foods food;

@@ -12,7 +12,7 @@ public class Home {
 		System.out.println("             User "+ "press : 2");
 		int press=sc.nextInt();
 		
-	
+	//Based on if you are a Restaurant Owner or a user. You will be switched to appropriate case.
 		
 		switch(press) {
 		  case 1:
@@ -49,29 +49,50 @@ public class Home {
 		
 
 	}
-	private static void Resaurant_Update_Order_limit() {
+	//***********************Restaurant Related Method **********************// 
+	
+	/*Restaurant can register it self!! This method will 
+	 * generate a random id for the Restaurant and assign it to it.*/
+	
+	private static void Resaurant_Registration(){
 		Scanner sc=new Scanner(System.in);
-		System.out.println("Please Enter your restaurant id: ");
-	    int res_id=sc.nextInt();
-	    System.out.println("Please Enter order limit :  ");
-	    int order_limit=sc.nextInt();
-	    boolean falg=false;
-	    for(int i=0;i<Restaurant_List.size();i++){
-	    	System.out.println("Res_Id: "+Restaurant_List.get(i).getId());
-	    	if(res_id==Restaurant_List.get(i).getId()){
-	    		Restaurant_List.get(i).setOrder_limit(order_limit);
-	    		falg=true;
-	    		break;
-	    	}
-	    }
-	    if(falg==false){
-	    	System.out.println("No Resturant found!! Please register first!!");
-	    	
-	    	
-	    }
-	    main(null);
-		
+		Random rand=new Random();
+		  System.out.println("Please provide Resturant Details: ");
+		  System.out.println("Name of Resturant: ");
+		  String name=sc.next();
+		  System.out.println("Address of Resturant: ");
+		  System.out.println();
+		  System.out.println("First Address");
+		  String FirstAddress=sc.next();
+		  System.out.println();
+		  System.out.println("Second Address");
+		  String SecondAddress=sc.next();
+		  
+		  System.out.println("City");
+		  String City=sc.next();
+		  
+		  
+		  System.out.println("State");
+		  String State=sc.next();
+		  
+		  System.out.println("Phone");
+		  String Phone=sc.next();
+		  
+		  System.out.println("Pin");
+		  String pin=sc.next();
+		  
+		  Address res_add=new  Address(FirstAddress, SecondAddress, City, State, Phone,pin);
+		  
+		  
+		  int id=1000+rand.nextInt(100);
+		  System.out.println("Your Restaurant Id is: "+ id);
+		  Restaurant new_restaurant=new Restaurant(id,name,res_add);
+		  Restaurant_List.add(new_restaurant);
+		  System.out.println("Registration Succesfull!!");
+		  main(null);
+		return;
 	}
+	/*Restaurant can update its menu*/
 	private static void Resaurant_Updation_Menue() {
 	    Scanner sc=new Scanner(System.in);
 	    System.out.println("Total number of restaurant: "+Restaurant_List.size());
@@ -128,6 +149,42 @@ public class Home {
 	    main(null);
 		
 	}
+	
+	/* This method deals with updation on order limit. If restaurant has lesser worker particular
+	day owner/admin can reset order limit*/
+	
+	private static void Resaurant_Update_Order_limit() {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Please Enter your restaurant id: ");
+	    int res_id=sc.nextInt();
+	    System.out.println("Please Enter order limit :  ");
+	    int order_limit=sc.nextInt();
+	    boolean falg=false;
+	    for(int i=0;i<Restaurant_List.size();i++){
+	    	System.out.println("Res_Id: "+Restaurant_List.get(i).getId());
+	    	if(res_id==Restaurant_List.get(i).getId()){
+	    		Restaurant_List.get(i).setOrder_limit(order_limit);
+	    		falg=true;
+	    		break;
+	    	}
+	    }
+	    if(falg==false){
+	    	System.out.println("No Resturant found!! Please register first!!");
+	    	
+	    	
+	    }
+	    main(null);
+		
+	}
+	
+	
+	
+	
+	
+	//********************************USER Related Methods!!! ****************************// 
+	
+	
+	/*This method is responsible to call all other user related methods!!*/
 	private static void User_Method() {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Press ");
@@ -168,6 +225,9 @@ public class Home {
 		  }
 		
 	}
+	
+	/* User can search any food. This method deals with it. This method will 
+	 * take food name and search in food list*/
 	private static void Search_Food(String food_name_to_be_searched) {
 		Scanner sc=new Scanner(System.in);
 		System.out.println(food_name_to_be_searched+ " food is available :");
@@ -198,6 +258,8 @@ public class Home {
 		User_Method();
 		
 	}
+	
+	/*If user wants to place an order. This method deals with placing user order*/
 	private static void Place_an_order(Foods food) {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Please enter restaurant id: ");
@@ -235,6 +297,9 @@ public class Home {
 		User_Method();
 		
 	}
+	
+	/*User can search Restaurant . This method gives Restaurant with particular name. 
+	 * It also displays the menu available there  */
 	private static void Search_Restaurant(String res_name) {
 		boolean falg=false;
 		for(int i=0;i<Restaurant_List.size();i++){
@@ -267,6 +332,9 @@ public class Home {
 		User_Method();
 		
 	}
+	
+	
+	/*User can see his/her profile. This method deals with user profile*/
 	private static void profile_fetch(String mobile_Number_user) {
 		boolean flag=false;
 		for(int i=0;i<User_List.size();i++){
@@ -289,6 +357,9 @@ public class Home {
 		User_Method();
 		
 	}
+	
+	
+	/*User can delete profile. This method will take mobile number and delete user account related to it.*/
 	private static void Delete_Profile(String mobile_Number_user) {
 		boolean flag=false;
 		
@@ -306,6 +377,10 @@ public class Home {
 		}
 		User_Method();
 	}
+	
+	
+	
+	/*User can update his/her prfile. He/She can change name,mobile number,address*/
 	private static void Update_Profile(String mobile_Number_user) {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("To change: ");
@@ -364,6 +439,9 @@ public class Home {
 		
 		User_Method();
 	}
+	
+	
+	/* User can register himself/herself*/
 	private static void User_Registration() {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Please provide User Details: ");
@@ -400,43 +478,7 @@ public class Home {
 		  User_Method();
 		
 	}
-	private static void Resaurant_Registration(){
-		Scanner sc=new Scanner(System.in);
-		Random rand=new Random();
-		  System.out.println("Please provide Resturant Details: ");
-		  System.out.println("Name of Resturant: ");
-		  String name=sc.next();
-		  System.out.println("Address of Resturant: ");
-		  System.out.println();
-		  System.out.println("First Address");
-		  String FirstAddress=sc.next();
-		  System.out.println();
-		  System.out.println("Second Address");
-		  String SecondAddress=sc.next();
-		  
-		  System.out.println("City");
-		  String City=sc.next();
-		  
-		  
-		  System.out.println("State");
-		  String State=sc.next();
-		  
-		  System.out.println("Phone");
-		  String Phone=sc.next();
-		  
-		  System.out.println("Pin");
-		  String pin=sc.next();
-		  
-		  Address res_add=new  Address(FirstAddress, SecondAddress, City, State, Phone,pin);
-		  
-		  
-		  int id=1000+rand.nextInt(100);
-		  System.out.println("Your Restaurant Id is: "+ id);
-		  Restaurant new_restaurant=new Restaurant(id,name,res_add);
-		  Restaurant_List.add(new_restaurant);
-		  System.out.println("Registration Succesfull!!");
-		  main(null);
-		return;
-	}
+	
 
 }
+//*****************************This is not the end we can add more functionality **************// 

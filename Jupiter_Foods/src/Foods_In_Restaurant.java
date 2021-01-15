@@ -1,4 +1,6 @@
 import java.util.*;
+
+/*This class will store one food and a list of restaurant which will be having that food */
 public class Foods_In_Restaurant {
 	private Foods food;
 	ArrayList<Restaurant>FoodInRestaurant=new ArrayList<>();

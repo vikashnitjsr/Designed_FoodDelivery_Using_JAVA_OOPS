@@ -1,7 +1,7 @@
 import java.util.*;
 public class Foods {
-    
-	private String food_id;
+    // Restaurant owner/admin can add,update the foods once registration is done!!
+	private String food_id; 
 	private String food_name;
 	private String price;
 	private String Cuisine;

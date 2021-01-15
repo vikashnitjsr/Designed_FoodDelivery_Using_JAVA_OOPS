@@ -1,6 +1,9 @@
 
 public class Address {
 
+	
+	// This class is used to store  address of both user and restaurant. 
+	//Both user and Restaurant class will be having this filed as their property
 	private String First_Address;
 	private String Second_Address;
 	private String City;

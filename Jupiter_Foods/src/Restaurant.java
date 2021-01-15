@@ -1,10 +1,10 @@
 import java.util.*;
 public class Restaurant {
 	
-	private int id;
-	private String name;
-	private Address address;
-	private int order_limit;
+	private int id; // Will be generated dynamically at run time.
+	private String name; // Owner input
+	private Address address; // Owner input
+	private int order_limit; //// Owner input and can be updated later based on need
 	
 	ArrayList<Foods>food_menu=new ArrayList<>();
 	Queue<Order_Class>orders=new LinkedList<>();
