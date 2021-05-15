@@ -1,4 +1,4 @@
-# Designed_Swiggy_JAVA_-OOPS
+# Designed_Food_Delivery_JAVA_-OOPS
 ### To Execute this swiggy design( Food Delivery System ) : 
 *    clone this repos
 *    Execute Home.java file 
